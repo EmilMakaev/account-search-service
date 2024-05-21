@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  clickhouse-server:
+    image: yandex/clickhouse-server:latest
+    container_name: clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_db:/var/lib/clickhouse
+
+  redis:
+    image: redis
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+
+  # app:
+  #   build: ./app
+  #   container_name: app
+  #   depends_on:
+  #     - clickhouse-server
+  #   environment:
+  #     REDIS_HOST: redis
+  #     CLICKHOUSE_HOST: clickhouse-server
+  #     CLICKHOUSE_PORT: 9000
+  #     CLICKHOUSE_USER: default
+  #     CLICKHOUSE_PASSWORD: ""
+  #     CLICKHOUSE_DATABASE: default
+  #   volumes:
+  #     - ./app:/app
+  #   ports:
+  #     - "3000:3000"
+
+volumes:
+  clickhouse_db:
